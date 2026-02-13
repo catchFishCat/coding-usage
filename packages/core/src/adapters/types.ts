@@ -5,43 +5,43 @@
  * Reference: docs/contracts/provider-adapter-interface.md
  */
 
-import type { ScopeType, UsageRecord, UsageSnapshot } from '../quota/index.js';
+import type { ScopeType, UsageRecord } from '../quota/index.js';
 
 /**
  * Adapter categories
  */
 export type AdapterCategory =
   | 'official'         // Official API provider
-  | 'aggregator'      // Multi-provider aggregator
-  | 'third_party'     // Third-party integration
-  | 'custom';         // Custom implementation
+  | 'aggregator'        // Multi-provider aggregator
+  | 'third_party'       // Third-party integration
+  | 'custom';           // Custom implementation
 
 /**
  * Confidence tiers for data reliability
  */
 export type ConfidenceTier =
-  | 'high'            // Official API with real-time data
-  | 'medium'          // Aggregator with possible caching
-  | 'low';            // Third-party or custom implementation
+  | 'high'             // Official API with real-time data
+  | 'medium'           // Aggregator with possible caching
+  | 'low';              // Third-party or custom implementation
 
 /**
  * Adapter health status
  */
 export type AdapterHealthStatus =
-  | 'healthy'         // All systems operational
-  | 'degraded'        // Partial functionality
-  | 'down';           // Service unavailable
+  | 'healthy'          // All systems operational
+  | 'degraded'         // Partial functionality
+  | 'down';             // Service unavailable
 
 /**
  * Adapter error codes
  */
 export type AdapterErrorCode =
-  | 'AUTH_FAILED'          // Invalid credentials
-  | 'RATE_LIMITED'         // Rate limit exceeded
+  | 'AUTH_FAILED'           // Invalid credentials
+  | 'RATE_LIMITED'          // Rate limit exceeded
   | 'ENDPOINT_UNAVAILABLE' // API down or deprecated
-  | 'PARSE_ERROR'         // Response format changed
-  | 'NETWORK_ERROR'        // Connection/timeout error
-  | 'CONFIG_INVALID'        // Missing/invalid config
+  | 'PARSE_ERROR'           // Response format changed
+  | 'NETWORK_ERROR'          // Connection/timeout error
+  | 'CONFIG_INVALID'         // Missing/invalid config
   | 'SCOPE_UNSUPPORTED';    // Requested scope not available
 
 /**
@@ -155,7 +155,12 @@ export interface UsageApiAdapter {
   minPollInterval: number;
 
   // Data fetching
-  fetchUsage(config: ProviderConfig): Promise<UsageSnapshot>;
+  fetchUsage(config: ProviderConfig): Promise<{
+    timestamp: number;
+    provider: string;
+    metrics: Record<string, unknown>;
+    raw: unknown;
+  }>;
 
   // Scope support
   supportedScopes: ScopeType[];
@@ -180,11 +185,20 @@ export interface ProxyUsageExtractor {
   apiFormat: 'openai' | 'anthropic' | 'gemini' | 'custom';
 
   // Extraction
-  extractUsage(request: HttpRequest, response: HttpResponse): TokenUsage | null;
+  extractUsage(request: {
+    method: string;
+    url: string;
+    headers: Record<string, string>;
+    body?: unknown;
+  }, response: {
+    statusCode: number;
+    headers: Record<string, string>;
+    body?: unknown;
+  }): Record<string, unknown> | null;
 
   // Streaming support
   supportsStreaming: boolean;
-  extractFromStreamChunk(chunk: string): TokenUsage | null;
+  extractFromStreamChunk(chunk: string): Record<string, unknown> | null;
 }
 
 /**

@@ -5,7 +5,7 @@
  * Reference: docs/contracts/window-semantics.md
  */
 
-import type { WindowType, TimeWindow } from './types.js';
+import type { WindowType, TimeWindow, FreshnessState } from './types.js';
 
 /**
  * Convert time window to milliseconds
@@ -48,7 +48,7 @@ export function getFixedWindowStart(window: TimeWindow, now: number = Date.now()
   }
 
   // Parse reset anchor (e.g., "1st 00:00", "monday 00:00")
-  const [dayPart, timePart] = resetAnchor.split(' ');
+  const [dayPart] = resetAnchor.split(' ');
 
   // Calculate start of current period
   const current = new Date(now);
@@ -152,7 +152,7 @@ export function isDataFresh(dataTimestamp: number | null, freshnessTTL: number, 
  */
 export function getFreshnessConfidence(
   freshness: FreshnessState,
-  dataTimestamp: number | null
+  _dataTimestamp: number | null
 ): 'high' | 'medium' | 'low' {
   if (freshness === 'known') return 'high';
   if (freshness === 'stale') return 'medium';

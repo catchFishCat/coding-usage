@@ -4,7 +4,7 @@
  * Types for quota evaluation alerts and notifications.
  */
 
-import type { QuotaEvaluation } from '../quota/index.js';
+import type { QuotaRule } from '../quota/index.js';
 
 /**
  * Alert levels
@@ -15,49 +15,45 @@ export type AlertLevel =
   | 'critical';      // Critical (95% threshold)
 
 /**
+ * Quota evaluation with provider info
+ */
+export interface QuotaEvaluation {
+  rule: QuotaRule;
+  used: number;
+  limit: number;
+  percentage: number;
+  resetsAt: number | null;
+  predictedExhaustAt: number | null;
+  freshness: 'known' | 'unknown' | 'stale';
+  provider: string;
+  quotaRuleId: string;
+}
+
+/**
  * Alert event
  */
 export interface AlertEvent {
   id: string;
   provider: string;
   quotaRuleId: string;
-
-  // Alert details
   level: AlertLevel;
   percentage: number;
   message: string;
-
-  // Prediction
   predictedExhaustAt: number | null;
-
-  // Metadata
   timestamp: number;
   acknowledged: boolean;
-  notifiedChannels: string[];    // Channels that have been notified
+  notifiedChannels: string[];
 }
-
-/**
- * Alert channel
- */
-export type AlertChannel =
-  | 'console'        // Console output
-  | 'desktop'       // Desktop notification
-  | 'webhook'       // Webhook callback
-  | 'email';         // Email notification
 
 /**
  * Alert configuration
  */
 export interface AlertConfig {
   enabled: boolean;
-  channels: AlertChannel[];
-
-  // Thresholds
-  infoThreshold: number;      // Default: 0.7
-  warningThreshold: number;   // Default: 0.85
-  criticalThreshold: number; // Default: 0.95
-
-  // Cooldown
+  channels: string[];
+  infoThreshold: number;
+  warningThreshold: number;
+  criticalThreshold: number;
   cooldownMs: number;           // Min time between same-level alerts
 }
 
@@ -117,33 +113,7 @@ export class AlertManager {
       case 'info':
         return `INFO: ${provider}/${quotaRuleId} at ${(percentage * 100).toFixed(1)}%`;
       default:
-        return `${provider}/${quotaRuleId}: ${(percentage * 100).toFixed(1)}% used`;
+        throw new Error(`Unknown alert level: ${level}`);
     }
   }
-
-  /**
-   * Update alert configuration
-   */
-  updateConfig(updates: Partial<AlertConfig>): void {
-    this.config = { ...this.config, ...updates };
-  }
-
-  /**
-   * Get current configuration
-   */
-  getConfig(): AlertConfig {
-    return { ...this.config };
-  }
-
-  /**
-   * Export configuration
-   */
-  toJSON(): object {
-    return this.config;
-  }
 }
-
-/**
- * Export for use in other modules
- */
-export { AlertManager, AlertConfig };

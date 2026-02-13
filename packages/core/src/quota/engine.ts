@@ -7,19 +7,11 @@
 
 import type {
   QuotaRule,
-  QuotaSnapshot,
-  UsageRecord,
   QuotaEvaluation,
-  WindowType,
-  FreshnessState,
-} from './types.ts';
+} from './types.js';
 import {
-  getWindowStart,
   getResetsAt,
-  windowToMs,
-  isDataFresh,
-  getFreshnessConfidence,
-} from './window.ts';
+} from './window.js';
 
 /**
  * Default freshness TTL (10 minutes)
@@ -29,7 +21,7 @@ const DEFAULT_FRESHNESS_TTL = 10 * 60 * 1000; // 10 minutes in ms
 /**
  * Default observation window for prediction (2 hours)
  */
-const DEFAULT_PREDIION_WINDOW = 2 * 60 * 60 * 1000; // 2 hours in ms
+const DEFAULT_PREDICTION_WINDOW = 2 * 60 * 60 * 1000; // 2 hours in ms
 
 /**
  * Quota Engine class
@@ -88,7 +80,7 @@ export class QuotaEngine {
     const resetsAt = getResetsAt(rule, now);
 
     // Determine freshness
-    const freshness = isDataFresh(dataTimestamp, DEFAULT_FRESHNESS_TTL, now);
+    const freshness = this.isDataFresh(dataTimestamp, DEFAULT_FRESHNESS_TTL, now);
 
     // Predict exhaustion
     const predictedExhaustAt = this.predictExhaustion(rule, currentUsage);
@@ -120,9 +112,19 @@ export class QuotaEngine {
     // Real implementation would analyze recent UsageRecords to calculate rate
     return Date.now() + 30 * 24 * 60 * 60 * 1000;
   }
+
+  /**
+   * Check if data is fresh based on TTL
+   */
+  private isDataFresh(dataTimestamp: number | null, ttl: number, now: number): 'known' | 'stale' {
+    if (!dataTimestamp) {
+      return 'stale';
+    }
+
+    const age = now - dataTimestamp;
+    return age < ttl ? 'known' : 'stale';
+  }
 }
 
-/**
- * Export for use in other modules
- */
-export { QuotaEngine, DEFAULT_FRESHNESS_TTL, DEFAULT_PREDICTION_WINDOW };
+// Export constants and class
+export { DEFAULT_FRESHNESS_TTL, DEFAULT_PREDICTION_WINDOW };

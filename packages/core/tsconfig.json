@@ -5,7 +5,11 @@
     "tsBuildInfoFile": "./dist/.tsbuildinfo",
     "esModuleInterop": true,
     "module": "preserve",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src/**/*", "**/__tests__/**/*.ts"]
 }
