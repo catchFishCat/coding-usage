@@ -1,4 +1,4 @@
-declare module 'better-sqlite3' {
+declare module "better-sqlite3" {
   class Database {
     constructor(filename: string, options?: any);
     prepare(sql: string): Statement;
@@ -7,12 +7,13 @@ declare module 'better-sqlite3' {
     close(): void;
     tableExists(name: string): boolean;
     open: boolean;
-    transaction<T>(fn: (db: Database) => T): T;
+    transaction<T>(fn: (...args: any[]) => T): (...args: any[]) => T;
   }
 
   class Statement {
     run(...params: any[]): RunResult;
     get(...params: any[]): any;
+    all(...params: any[]): any[];
   }
 
   interface RunResult {

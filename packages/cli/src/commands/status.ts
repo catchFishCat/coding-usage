@@ -4,47 +4,39 @@
  * Display current quota status for all configured providers
  */
 
-import type { StatusOptions } from '../types.js';
+import type { StatusOptions } from "../types.js";
+import { getQuotaStatusSnapshot } from "@coding-usage/core";
+import type { ProviderQuotaStatus } from "@coding-usage/core";
 
 /**
  * Display quota status
  */
 export async function status(options: StatusOptions = {}): Promise<void> {
-  // TODO: Implement actual database query
-  const mockData = [
-    {
-      provider: 'openai',
-      rule: 'gpt-4-monthly',
-      used: 1234567,
-      limit: 1000000,
-      percentage: 0.1234,
-      freshness: 'known',
-    },
-    {
-      provider: 'openrouter',
-      rule: 'claude-opus-monthly',
-      used: 85000,
-      limit: 500000,
-      percentage: 0.17,
-      freshness: 'stale',
-    },
-  ];
+  const snapshot = getQuotaStatusSnapshot();
 
   if (options.json) {
-    console.log(JSON.stringify(mockData, null, 2));
+    console.log(JSON.stringify(snapshot, null, 2));
+    return;
+  }
+
+  if (snapshot.length === 0) {
+    console.log("\nNo quota snapshots found yet.");
+    console.log("Tip: add providers/rules and ingest usage data first.\n");
     return;
   }
 
   // Display as simple table
-  console.log('\nQuota Status:');
-  console.log('─'.repeat(60));
-  mockData.forEach((row) => {
-    const percentage = (row.percentage * 100).toFixed(1) + '%';
-    const freshness = row.freshness === 'known' ? '✓' : '⚠';
+  console.log("\nQuota Status:");
+  console.log("─".repeat(60));
+  snapshot.forEach((row: ProviderQuotaStatus) => {
+    const percentage = (row.percentage * 100).toFixed(1) + "%";
+    const freshness = row.freshness === "known" ? "✓" : "⚠";
 
-    console.log(`${row.provider}/${row.rule}`);
-    console.log(`  Used: ${row.used.toLocaleString()} / ${row.limit.toLocaleString()} (${percentage})`);
+    console.log(`${row.providerId}/${row.ruleName}`);
+    console.log(
+      `  Used: ${row.used.toLocaleString()} / ${row.limit.toLocaleString()} (${percentage})`,
+    );
     console.log(`  Freshness: ${freshness}`);
-    console.log('─'.repeat(60));
+    console.log("─".repeat(60));
   });
 }

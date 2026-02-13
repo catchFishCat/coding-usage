@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS quota_rules (
   enabled BOOLEAN DEFAULT 1,
 
   type TEXT NOT NULL,                   -- 'sliding_window', 'fixed_window', 'budget', 'balance'
-  limit REAL NOT NULL,
+  "limit" REAL NOT NULL,
   unit TEXT NOT NULL,                   -- 'requests', 'tokens', 'usd', 'credits', 'prompts'
 
   window_size INTEGER,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS quota_snapshots (
   timestamp INTEGER NOT NULL,
 
   used REAL NOT NULL,
-  limit REAL NOT NULL,
+  "limit" REAL NOT NULL,
   percentage REAL NOT NULL,
 
   resets_at INTEGER,
@@ -272,4 +272,4 @@ export const allIndexes = [
 /**
  * Complete schema (tables + indexes)
  */
-export const fullSchema = [...allTables, ...allIndexes].join('\n');
+export const fullSchema = [...allTables, ...allIndexes].join("\n");

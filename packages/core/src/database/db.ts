@@ -6,30 +6,35 @@
  * Reference: cc-switch database initialization pattern
  */
 
-import Database from 'better-sqlite3';
-import path from 'node:path';
-import fs from 'node:fs';
-import { runMigrations, validateSchema, getSchemaVersion, CURRENT_SCHEMA_VERSION } from './migrations.js';
+import Database from "better-sqlite3";
+import path from "node:path";
+import fs from "node:fs";
+import {
+  runMigrations,
+  validateSchema,
+  getSchemaVersion,
+  CURRENT_SCHEMA_VERSION,
+} from "./migrations.js";
 
 /**
  * Database configuration options
  */
 export interface DatabaseConfig {
-  dataDir: string;          // Directory containing database files
-  filename?: string;         // Database filename (default: 'coding-usage.db')
-  readonly?: boolean;        // Open in readonly mode
-  verbose?: boolean;         // Enable query logging
+  dataDir: string; // Directory containing database files
+  filename?: string; // Database filename (default: 'coding-usage.db')
+  readonly?: boolean; // Open in readonly mode
+  verbose?: boolean; // Enable query logging
 }
 
 /**
  * Default database configuration
  */
 const DEFAULT_CONFIG: DatabaseConfig = {
-  dataDir: process.env.CODING_USAGE_DATA_DIR ||
-    path.join(process.cwd(), 'data'),
-  filename: 'coding-usage.db',
+  dataDir:
+    process.env.CODING_USAGE_DATA_DIR || path.join(process.cwd(), "data"),
+  filename: "coding-usage.db",
   readonly: false,
-  verbose: process.env.CODING_USAGE_DB_VERBOSE === 'true',
+  verbose: process.env.CODING_USAGE_DB_VERBOSE === "true",
 };
 
 /**
@@ -48,20 +53,22 @@ export function createDatabase(config: Partial<DatabaseConfig> = {}): Database {
 
   const dbPath = path.join(
     finalConfig.dataDir,
-    finalConfig.filename || 'coding-usage.db'
+    finalConfig.filename || "coding-usage.db",
   );
+
+  const verboseLogger = finalConfig.verbose ? console.log : undefined;
 
   const db = new Database(dbPath, {
     readonly: finalConfig.readonly,
-    verbose: finalConfig.verbose,
+    verbose: verboseLogger,
     fileMustExist: false,
   });
 
   // Enable WAL mode for better concurrent access
-  db.pragma('journal_mode = WAL');
+  db.pragma("journal_mode = WAL");
 
   // Enable foreign keys
-  db.pragma('foreign_keys = ON');
+  db.pragma("foreign_keys = ON");
 
   return db;
 }
@@ -73,8 +80,13 @@ export function createDatabase(config: Partial<DatabaseConfig> = {}): Database {
  * @returns True if initialization was needed
  */
 export function initializeDatabase(db: Database): boolean {
-  const existingVersion = getSchemaVersion(db);
-  let needsInit = !existingVersion;
+  let existingVersion: string | null = null;
+  try {
+    existingVersion = getSchemaVersion(db);
+  } catch {
+    existingVersion = null;
+  }
+  const needsInit = !existingVersion;
 
   // Run migrations (idempotent - does nothing if up to date)
   runMigrations(db);
@@ -82,7 +94,7 @@ export function initializeDatabase(db: Database): boolean {
   // Validate final schema
   if (!validateSchema(db)) {
     throw new Error(
-      `Schema validation failed. Expected version ${CURRENT_SCHEMA_VERSION}, got ${getSchemaVersion(db)}`
+      `Schema validation failed. Expected version ${CURRENT_SCHEMA_VERSION}, got ${getSchemaVersion(db)}`,
     );
   }
 
@@ -95,7 +107,9 @@ export function initializeDatabase(db: Database): boolean {
  * @param config - Database configuration
  * @returns Initialized database instance, or true if initialization was needed
  */
-export function createInitializedDatabase(config: Partial<DatabaseConfig> = {}): Database | boolean {
+export function createInitializedDatabase(
+  config: Partial<DatabaseConfig> = {},
+): Database | boolean {
   const db = createDatabase(config);
   const neededInit = initializeDatabase(db);
   return neededInit ? db : db;
@@ -128,7 +142,7 @@ export function getDatabasePath(config: Partial<DatabaseConfig> = {}): string {
   const finalConfig = { ...DEFAULT_CONFIG, ...config };
   return path.join(
     finalConfig.dataDir,
-    finalConfig.filename || 'coding-usage.db'
+    finalConfig.filename || "coding-usage.db",
   );
 }
 

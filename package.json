@@ -5,12 +5,12 @@
   "description": "Local-first unified monitor for AI coding quota/usage across multi-provider subscriptions",
   "type": "module",
   "scripts": {
-    "typecheck": "pnpm -r --parallel run typecheck",
+    "typecheck": "pnpm --filter @coding-usage/core run build && pnpm -r --parallel run typecheck",
     "test": "pnpm -r --parallel run test",
     "build": "pnpm -r --parallel run build",
     "dev": "pnpm --filter @coding-usage/web dev",
-    "daemon": "pnpm --filter @coding-usage/server dev",
-    "cli": "pnpm --filter @coding-usage/cli start"
+    "daemon": "node packages/server/dist/index.js",
+    "cli": "node packages/cli/dist/cli.js"
   },
   "keywords": [
     "ai",

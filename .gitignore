@@ -1,34 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
 # OS
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
-logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-*.log*
 
-# Node
-node_modules/
-dist/
-build/
+# Testing
 coverage/
-.pnpm-store/
+.nyc_output/
 
-# Environment
-.env
-.env.*
-!.env.example
-
-# IDE
-.idea/
-.vscode/
-
-# Database/runtime
-*.db
-*.sqlite
-*.sqlite3
-tmp/
-runtime/
-
-# Tauri/Rust
-target/
-src-tauri/target/
+# Misc
+.cache
+.DS_Store
+*.swap
