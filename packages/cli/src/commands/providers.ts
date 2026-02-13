@@ -4,9 +4,6 @@
  * List available providers
  */
 
-import chalk from 'chalk';
-import Table from 'cli-table3';
-
 /**
  * Available providers
  */
@@ -57,20 +54,12 @@ const AVAILABLE_PROVIDERS = [
  * List available providers
  */
 export async function listProviders(): Promise<void> {
-  const table = new Table({
-    head: ['ID', 'Name', 'Category', 'Confidence', 'Scopes'],
-    colWidths: [15, 20, 15, 12, 20],
-  });
-
+  console.log('Available providers:');
   AVAILABLE_PROVIDERS.forEach((provider) => {
-    table.push([
-      provider.id,
-      provider.name,
-      provider.category,
-      provider.confidence,
-      provider.scopes.join(', '),
-    ]);
+    console.log(`  - ${provider.name} (${provider.id})`);
+    console.log(`    Category: ${provider.category}`);
+    console.log(`    Description: ${provider.description}`);
+    console.log(`    Scopes: ${provider.scopes.join(', ')}`);
+    console.log();
   });
-
-  console.log(table.toString());
 }

@@ -5,8 +5,6 @@
  */
 
 import type { StatusOptions } from '../types.js';
-import Table from 'cli-table3';
-import chalk from 'chalk';
 
 /**
  * Display quota status
@@ -18,15 +16,15 @@ export async function status(options: StatusOptions = {}): Promise<void> {
       provider: 'openai',
       rule: 'gpt-4-monthly',
       used: 1234567,
-      limit: 10000000,
+      limit: 1000000,
       percentage: 0.1234,
       freshness: 'known',
     },
     {
       provider: 'openrouter',
       rule: 'claude-opus-monthly',
-      used: 850000,
-      limit: 5000000,
+      used: 85000,
+      limit: 500000,
       percentage: 0.17,
       freshness: 'stale',
     },
@@ -37,32 +35,16 @@ export async function status(options: StatusOptions = {}): Promise<void> {
     return;
   }
 
-  // Display as table
-  const table = new Table({
-    head: ['Provider', 'Rule', 'Used', 'Limit', '%', 'Freshness'],
-    colWidths: [20, 25, 15, 15, 8, 12],
-  });
-
+  // Display as simple table
+  console.log('\nQuota Status:');
+  console.log('─'.repeat(60));
   mockData.forEach((row) => {
     const percentage = (row.percentage * 100).toFixed(1) + '%';
     const freshness = row.freshness === 'known' ? '✓' : '⚠';
 
-    table.push([
-      row.provider,
-      row.rule,
-      formatNumber(row.used),
-      formatNumber(row.limit),
-      percentage,
-      freshness,
-    ]);
+    console.log(`${row.provider}/${row.rule}`);
+    console.log(`  Used: ${row.used.toLocaleString()} / ${row.limit.toLocaleString()} (${percentage})`);
+    console.log(`  Freshness: ${freshness}`);
+    console.log('─'.repeat(60));
   });
-
-  console.log(table.toString());
-}
-
-/**
- * Format number with thousand separators
- */
-function formatNumber(num: number): string {
-  return num.toLocaleString('en-US');
 }

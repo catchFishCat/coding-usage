@@ -5,7 +5,6 @@
  */
 
 import { Command } from 'commander';
-import type { Config } from './types.js';
 
 /**
  * Root command

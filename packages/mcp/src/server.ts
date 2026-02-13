@@ -6,7 +6,6 @@
  */
 
 import { Server } from '@modelcontextprotocol/sdk';
-import type { QuotaEngine } from '@coding-usage/core';
 
 /**
  * MCP server configuration
@@ -56,7 +55,7 @@ export function createMcpServer(config: McpServerConfig = {}): Server {
           provider: 'openai',
           rule: 'gpt-4-monthly',
           used: 1234567,
-          limit: 1000000000,
+          limit: 10000000,
           percentage: 0.1234,
           freshness: 'known',
         },
@@ -109,11 +108,11 @@ export function createMcpServer(config: McpServerConfig = {}): Server {
         required: ['provider'],
       },
     },
-    async ({ provider, totalTokens, costUsd, model }) => {
+    async ({ provider: _provider, totalTokens: _totalTokens, costUsd: _costUsd, model: _model }) => {
       // TODO: Add to database
       return {
         success: true,
-        message: `Usage record added for ${provider}`,
+        message: `Usage record added for ${_provider}`,
       };
     }
   );

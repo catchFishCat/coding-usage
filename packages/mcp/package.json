@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "@coding-usage/core": "workspace:*",
-    "@modelcontextprotocol/sdk": "^1.0.4"
+    "@modelcontextprotocol/sdk": "^1.26.0"
   }
 }
