@@ -1,0 +1,34 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+.pnpm-store/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# Database/runtime
+*.db
+*.sqlite
+*.sqlite3
+tmp/
+runtime/
+
+# Tauri/Rust
+target/
+src-tauri/target/
