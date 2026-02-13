@@ -5,7 +5,9 @@
  * Allows coding-usage to be queried and controlled via MCP.
  */
 
-import { Server } from '@modelcontextprotocol/sdk';
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { z } from "zod";
 
 /**
  * MCP server configuration
@@ -18,103 +20,89 @@ interface McpServerConfig {
 /**
  * Create MCP server
  */
-export function createMcpServer(config: McpServerConfig = {}): Server {
-  const server = new Server({
-    name: config.name || 'coding-usage',
-    version: config.version || '0.1.0',
+export function createMcpServer(config: McpServerConfig = {}): McpServer {
+  const server = new McpServer({
+    name: config.name || "coding-usage",
+    version: config.version || "0.1.0",
   });
 
   // List quota status
-  server.tool(
-    'list_quotas',
-    'List all quota rules and their current status',
+  server.registerTool(
+    "list_quotas",
     {
-      inputSchema: {
-        type: 'object',
-        properties: {},
-      },
-      outputSchema: {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            provider: { type: 'string' },
-            rule: { type: 'string' },
-            used: { type: 'number' },
-            limit: { type: 'number' },
-            percentage: { type: 'number' },
-            freshness: { type: 'string' },
-          },
-        },
-      },
+      description: "List all quota rules and their current status",
     },
     async () => {
       // TODO: Query actual quota engine
-      return [
+      const quotas = [
         {
-          provider: 'openai',
-          rule: 'gpt-4-monthly',
+          provider: "openai",
+          rule: "gpt-4-monthly",
           used: 1234567,
           limit: 10000000,
           percentage: 0.1234,
-          freshness: 'known',
+          freshness: "known",
         },
       ];
-    }
+
+      return {
+        content: [{ type: "text", text: JSON.stringify(quotas) }],
+      };
+    },
   );
 
   // Get provider info
-  server.tool(
-    'get_provider',
-    'Get information about a specific provider',
+  server.registerTool(
+    "get_provider",
     {
-      inputSchema: {
-        type: 'object',
-        properties: {
-          providerId: {
-            type: 'string',
-            description: 'Provider ID (e.g., openai, openrouter)',
-          },
-        },
-        required: ['providerId'],
-      },
+      description: "Get information about a specific provider",
+      inputSchema: z.object({
+        providerId: z
+          .string()
+          .describe("Provider ID (e.g., openai, openrouter)"),
+      }),
     },
-    async ({ providerId }) => {
+    async ({ providerId }: { providerId: string }) => {
       // TODO: Query provider info
-      return {
+      const provider = {
         id: providerId,
-        name: 'OpenAI',
-        category: 'official',
-        confidence: 'high',
-        supportedScopes: ['personal', 'org'],
-        description: 'GPT-4, GPT-3.5 Turbo',
+        name: "OpenAI",
+        category: "official",
+        confidence: "high",
+        supportedScopes: ["personal", "org"],
+        description: "GPT-4, GPT-3.5 Turbo",
       };
-    }
+
+      return {
+        structuredContent: provider,
+        content: [{ type: "text", text: JSON.stringify(provider) }],
+      };
+    },
   );
 
   // Add usage record
-  server.tool(
-    'add_usage',
-    'Add a usage record manually',
+  server.registerTool(
+    "add_usage",
     {
-      inputSchema: {
-        type: 'object',
-        properties: {
-          provider: { type: 'string' },
-          totalTokens: { type: 'number' },
-          costUsd: { type: 'number' },
-          model: { type: 'string' },
-        },
-        required: ['provider'],
-      },
+      description: "Add a usage record manually",
+      inputSchema: z.object({
+        provider: z.string(),
+        totalTokens: z.number().optional(),
+        costUsd: z.number().optional(),
+        model: z.string().optional(),
+      }),
     },
-    async ({ provider: _provider, totalTokens: _totalTokens, costUsd: _costUsd, model: _model }) => {
+    async ({ provider }: { provider: string }) => {
       // TODO: Add to database
+      const message = `Usage record added for ${provider}`;
       return {
-        success: true,
-        message: `Usage record added for ${_provider}`,
+        structuredContent: {
+          success: true,
+          message,
+        },
+        content: [{ type: "text", text: message }],
       };
-    }
+    },
   );
 
   return server;
@@ -125,11 +113,6 @@ export function createMcpServer(config: McpServerConfig = {}): Server {
  */
 export async function startMcpServer(): Promise<void> {
   const server = createMcpServer();
-
-  const stdio = new StdioServer({
-    server,
-    name: 'coding-usage-mcp',
-  });
-
-  await stdio.start();
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
 }
