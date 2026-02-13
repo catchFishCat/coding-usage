@@ -148,3 +148,6 @@ export function getMigrationStatus(db: Database): Array<{
     applied: isMigrationApplied(db, m.version),
   }));
 }
+
+// Export all migrations for testing
+export { migrations as allMigrations };

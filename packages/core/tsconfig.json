@@ -1,9 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": "./dist/.tsbuildinfo"
+    "composite": false,
+    "esModuleInterop": true,
+    "module": "preserve",
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*"],
-  "references": []
+  "include": ["src/**/*", "**/__tests__/**/*.ts"]
 }

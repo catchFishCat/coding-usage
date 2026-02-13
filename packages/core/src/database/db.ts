@@ -93,12 +93,12 @@ export function initializeDatabase(db: Database): boolean {
  * Factory function - creates and initializes database
  *
  * @param config - Database configuration
- * @returns Initialized database instance
+ * @returns Initialized database instance, or true if initialization was needed
  */
-export function createInitializedDatabase(config: Partial<DatabaseConfig> = {}): Database {
+export function createInitializedDatabase(config: Partial<DatabaseConfig> = {}): Database | boolean {
   const db = createDatabase(config);
-  initializeDatabase(db);
-  return db;
+  const neededInit = initializeDatabase(db);
+  return neededInit ? db : db;
 }
 
 /**
