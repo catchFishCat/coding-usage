@@ -4,7 +4,8 @@
     "composite": false,
     "esModuleInterop": true,
     "module": "preserve",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true
   },
   "include": ["src/**/*", "**/__tests__/**/*.ts"]
 }

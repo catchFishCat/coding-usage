@@ -12,14 +12,14 @@ import type {
   QuotaEvaluation,
   WindowType,
   FreshnessState,
-} from './types.js';
+} from './types.ts';
 import {
   getWindowStart,
   getResetsAt,
   windowToMs,
   isDataFresh,
   getFreshnessConfidence,
-} from './window.js';
+} from './window.ts';
 
 /**
  * Default freshness TTL (10 minutes)
