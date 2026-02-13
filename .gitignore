@@ -36,3 +36,6 @@ coverage/
 .cache
 .DS_Store
 *.swap
+
+# Claude Code configuration (local only)
+.claude/
