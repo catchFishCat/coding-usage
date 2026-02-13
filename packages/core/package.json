@@ -1,0 +1,50 @@
+{
+  "name": "@coding-usage/core",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Core business logic for coding-usage monitor",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./database": {
+      "types": "./dist/database/index.d.ts",
+      "import": "./dist/database/index.js"
+    },
+    "./adapters": {
+      "types": "./dist/adapters/index.d.ts",
+      "import": "./dist/adapters/index.js"
+    },
+    "./quota": {
+      "types": "./dist/quota/index.d.ts",
+      "import": "./dist/quota/index.js"
+    },
+    "./alerts": {
+      "types": "./dist/alerts/index.d.ts",
+      "import": "./dist/alerts/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "build": "tsc"
+  },
+  "keywords": [
+    "ai",
+    "quota",
+    "monitoring",
+    "core"
+  ],
+  "author": "coding-usage contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "zod": "^3.24.1"
+  }
+}

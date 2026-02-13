@@ -1,0 +1,35 @@
+{
+  "name": "@coding-usage/mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "MCP server for coding-usage monitor integration with AI tools",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "coding-usage-mcp": "./dist/server.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "build": "tsc"
+  },
+  "keywords": [
+    "mcp",
+    "modelcontextprotocol"
+  ],
+  "author": "coding-usage contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@coding-usage/core": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  }
+}

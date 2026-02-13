@@ -1,0 +1,38 @@
+{
+  "name": "@coding-usage/server",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HTTP server and daemon for coding-usage monitor",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "coding-usage-daemon": "./dist/cli.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "build": "tsc",
+    "dev": "node --watch dist/index.js"
+  },
+  "keywords": [
+    "api",
+    "server",
+    "fastify"
+  ],
+  "author": "coding-usage contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@coding-usage/core": "workspace:*",
+    "fastify": "^5.2.0",
+    "@fastify/cors": "^10.0.1"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@coding-usage/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CLI tool for coding-usage monitor",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "coding-usage": "./dist/cli.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "keywords": [
+    "cli",
+    "terminal",
+    "commander"
+  ],
+  "author": "coding-usage contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@coding-usage/core": "workspace:*",
+    "commander": "^13.1.0",
+    "cli-table3": "^0.6.5",
+    "chalk": "^5.4.1"
+  }
+}

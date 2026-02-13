@@ -1,0 +1,30 @@
+{
+  "name": "@coding-usage/web",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Web dashboard for coding-usage monitor",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests yet\"",
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "keywords": [
+    "web",
+    "dashboard",
+    "react"
+  ],
+  "author": "coding-usage contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
