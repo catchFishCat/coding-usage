@@ -1,6 +1,7 @@
 /**
- * Database module
- * Placeholder for database schema and migrations
+ * Database module exports
  */
 
-export const placeholder = true;
+export * from './schema.js';
+export * from './migrations.js';
+export * from './db.js';

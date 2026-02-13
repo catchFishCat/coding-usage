@@ -1,6 +1,7 @@
 /**
- * Quota engine module
- * Placeholder for quota evaluation logic
+ * Quota module exports
  */
 
-export const placeholder = true;
+export * from './types.js';
+export * from './window.js';
+export * from './engine.js';

@@ -2,10 +2,22 @@
  * @coding-usage/core
  *
  * Core business logic for coding-usage monitor.
- * Exports database, adapters, quota engine, and alert system.
+ *
+ * This package provides:
+ * - Database schema and migrations
+ * - Quota evaluation engine
+ * - Provider adapters
+ * - Alert system
  */
 
-export { placeholder as dbPlaceholder } from './database/index.js';
-export { placeholder as adapterPlaceholder } from './adapters/index.js';
-export { placeholder as quotaPlaceholder } from './quota/index.js';
-export { placeholder as alertPlaceholder } from './alerts/index.js';
+// Export database module
+export * from './database/index.js';
+
+// Export quota module
+export * from './quota/index.js';
+
+// Export adapters module
+export * from './adapters/index.js';
+
+// Export alerts module
+export * from './alerts/index.js';
