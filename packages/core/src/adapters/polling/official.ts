@@ -1,6 +1,7 @@
 import {
   pollCodexOfficial,
   pollGeminiOfficial,
+  pollGitHubCopilotOfficial,
   pollGlmOfficial,
   pollKimiOfficial,
   pollOpenRouterOfficial,
@@ -13,4 +14,5 @@ export const officialProviderPollers: ProviderPoller[] = [
   pollGlmOfficial,
   pollKimiOfficial,
   pollGeminiOfficial,
+  pollGitHubCopilotOfficial,
 ];

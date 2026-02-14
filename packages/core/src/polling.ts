@@ -34,6 +34,7 @@ export async function pollProvidersOnce(): Promise<PollResult[]> {
       "glm",
       "kimi",
       "gemini",
+      "github-copilot",
     ] as const;
 
     const results = await Promise.all(

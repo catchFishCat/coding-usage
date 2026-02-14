@@ -15,3 +15,5 @@ export { probeKimiExperimental, kimiAuthNotes } from "./kimi/experimental.js";
 export { pollGeminiOfficial } from "./gemini/official.js";
 export { probeGeminiExperimental } from "./gemini/experimental.js";
 export { geminiAuthFeasibility } from "./gemini/feasibility.js";
+
+export { pollGitHubCopilotOfficial } from "./github-copilot/official.js";
