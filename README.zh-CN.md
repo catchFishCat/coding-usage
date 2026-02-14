@@ -94,6 +94,12 @@ pnpm cli usage --no-refresh
 - `docs/plans/2026-02-13-coding-usage-implementation-plan.md`
 - `docs/plans/2026-02-13-coding-usage-micro-checklist.md`
 
+## 供应商追踪文档
+
+- 英文索引：`docs/providers/README.md`
+- 中文索引：`docs/providers/zh-CN/README.md`
+- 每个供应商文档均包含：追踪接口路径、字段映射方式、鉴权来源优先级、回退链路。
+
 ## License
 
 MIT

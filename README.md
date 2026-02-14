@@ -94,6 +94,12 @@ pnpm cli usage --no-refresh
 - `docs/plans/2026-02-13-coding-usage-implementation-plan.md`
 - `docs/plans/2026-02-13-coding-usage-micro-checklist.md`
 
+## Provider tracking docs
+
+- English index: `docs/providers/README.md`
+- Chinese index: `docs/providers/zh-CN/README.md`
+- Per-provider docs include tracking paths, payload mapping, auth source priority, and fallback behavior.
+
 ## License
 
 MIT
