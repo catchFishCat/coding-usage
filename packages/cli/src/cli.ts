@@ -57,6 +57,32 @@ program
     await listProviders();
   });
 
+program
+  .command("configured-providers")
+  .description("List all configured providers in one shot")
+  .option("--json", "output as JSON")
+  .option("-a, --all", "include unconfigured providers and signal status")
+  .action(async (options) => {
+    const { listConfiguredProviders } =
+      await import("./commands/configured-providers.js");
+    await listConfiguredProviders(options);
+  });
+
+program
+  .command("usage")
+  .description("Collect latest usage and show package usage status")
+  .option("--json", "output status as JSON")
+  .option("--no-refresh", "skip refresh and print cached status only")
+  .action(async (options) => {
+    if (options.refresh) {
+      const { collect } = await import("./commands/collect.js");
+      await collect({ experimental: true, hideModeLabel: true });
+    }
+
+    const { status } = await import("./commands/status.js");
+    await status({ json: options.json });
+  });
+
 /**
  * Collect command - run provider polling once
  */

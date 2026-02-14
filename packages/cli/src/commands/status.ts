@@ -8,6 +8,13 @@ import type { StatusOptions } from "../types.js";
 import { getQuotaStatusSnapshot } from "@coding-usage/core";
 import type { ProviderQuotaStatus } from "@coding-usage/core";
 
+function formatTime(timestamp: number): string {
+  if (!Number.isFinite(timestamp) || timestamp <= 0) {
+    return "unknown";
+  }
+  return new Date(timestamp).toLocaleString();
+}
+
 /**
  * Display quota status
  */
@@ -25,8 +32,14 @@ export async function status(options: StatusOptions = {}): Promise<void> {
     return;
   }
 
+  const latestRefresh = snapshot.reduce(
+    (max, row) => Math.max(max, row.snapshotTimestamp),
+    0,
+  );
+
   // Display as simple table
   console.log("\nQuota Status:");
+  console.log(`Last refresh: ${formatTime(latestRefresh)}`);
   console.log("─".repeat(60));
   snapshot.forEach((row: ProviderQuotaStatus) => {
     const percentage = (row.percentage * 100).toFixed(1) + "%";
@@ -36,6 +49,7 @@ export async function status(options: StatusOptions = {}): Promise<void> {
     console.log(
       `  Used: ${row.used.toLocaleString()} / ${row.limit.toLocaleString()} (${percentage})`,
     );
+    console.log(`  Updated: ${formatTime(row.snapshotTimestamp)}`);
     console.log(`  Freshness: ${freshness}`);
     console.log("─".repeat(60));
   });

@@ -49,3 +49,11 @@ export interface RuleOptions {
   limit?: number;
   unit?: "requests" | "tokens" | "usd" | "credits";
 }
+
+/**
+ * Configured providers command options
+ */
+export interface ConfiguredProvidersOptions extends CommandOptions {
+  json?: boolean;
+  all?: boolean;
+}
