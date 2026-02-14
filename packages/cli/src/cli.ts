@@ -59,9 +59,10 @@ program
 program
   .command("collect")
   .description("Collect usage from configured provider APIs once")
-  .action(async () => {
+  .option("-e, --experimental", "also probe experimental/unofficial paths")
+  .action(async (options) => {
     const { collect } = await import("./commands/collect.js");
-    await collect();
+    await collect(options);
   });
 
 /**
