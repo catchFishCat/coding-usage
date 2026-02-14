@@ -28,12 +28,24 @@ export async function pollProvidersOnce(): Promise<PollResult[]> {
   initializeDatabase(db);
 
   try {
+    const officialTargets = [
+      "openrouter",
+      "codex",
+      "glm",
+      "kimi",
+      "gemini",
+    ] as const;
+
     const results = await Promise.all(
-      officialProviderPollers.map(async (poller) => {
+      officialProviderPollers.map(async (poller, index) => {
         try {
           return await poller(db);
         } catch (error) {
-          return normalizeError("unknown", "official", error);
+          return normalizeError(
+            officialTargets[index] ?? "unknown",
+            "official",
+            error,
+          );
         }
       }),
     );
@@ -45,12 +57,18 @@ export async function pollProvidersOnce(): Promise<PollResult[]> {
 }
 
 export async function probeAllProviderPaths(): Promise<PollResult[]> {
+  const experimentalTargets = ["codex", "glm", "kimi", "gemini"] as const;
+
   return Promise.all(
-    experimentalProviderProbes.map(async (probe) => {
+    experimentalProviderProbes.map(async (probe, index) => {
       try {
         return await probe();
       } catch (error) {
-        return normalizeError("unknown", "experimental", error);
+        return normalizeError(
+          experimentalTargets[index] ?? "unknown",
+          "experimental",
+          error,
+        );
       }
     }),
   );
