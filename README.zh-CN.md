@@ -72,6 +72,22 @@ pnpm cli usage
 pnpm cli usage --no-refresh
 ```
 
+### 6）启动 Web 仪表盘
+
+在两个终端分别运行 API 服务和前端：
+
+```bash
+# 终端 A
+pnpm daemon
+
+# 终端 B
+pnpm dev
+```
+
+打开 `http://127.0.0.1:5173`。
+
+开发模式下，前端通过 Vite 代理访问 `/status` 与 `/health`（代理目标 `http://127.0.0.1:8787`）。
+
 ## 常用命令
 
 - `pnpm cli usage`：刷新并显示配额状态
@@ -88,17 +104,25 @@ pnpm cli usage --no-refresh
 - 部分供应商路径依赖内部/非公开接口，后续可能变化。
 - 如果某供应商未出现在 `Quota Status`，先执行一次 `pnpm cli usage` 并查看命令输出错误信息。
 
-## 开发文档
-
-- `docs/plans/2026-02-13-coding-usage-monitor-design.md`
-- `docs/plans/2026-02-13-coding-usage-implementation-plan.md`
-- `docs/plans/2026-02-13-coding-usage-micro-checklist.md`
-
 ## 供应商追踪文档
 
 - 英文索引：`docs/providers/README.md`
 - 中文索引：`docs/providers/zh-CN/README.md`
 - 每个供应商文档均包含：追踪接口路径、字段映射方式、鉴权来源优先级、回退链路。
+- 英文供应商文档：
+  - `docs/providers/codex-tracking-and-auth.md`
+  - `docs/providers/gemini-tracking-and-auth.md`
+  - `docs/providers/kimi-tracking-and-auth.md`
+  - `docs/providers/glm-tracking-and-auth.md`
+  - `docs/providers/openrouter-tracking-and-auth.md`
+  - `docs/providers/github-copilot-tracking-and-auth.md`
+- 中文供应商文档：
+  - `docs/providers/zh-CN/codex-tracking-and-auth.zh-CN.md`
+  - `docs/providers/zh-CN/gemini-tracking-and-auth.zh-CN.md`
+  - `docs/providers/zh-CN/kimi-tracking-and-auth.zh-CN.md`
+  - `docs/providers/zh-CN/glm-tracking-and-auth.zh-CN.md`
+  - `docs/providers/zh-CN/openrouter-tracking-and-auth.zh-CN.md`
+  - `docs/providers/zh-CN/github-copilot-tracking-and-auth.zh-CN.md`
 
 ## License
 
