@@ -5,19 +5,21 @@
  * React SPA with Vite.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Dashboard } from "./components/Dashboard";
+import "./styles.css";
 
 /**
- * Placeholder App component
+ * Main App component
  */
 function App() {
-  return React.createElement('div', { className: 'app' }, [
-    React.createElement('h1', { key: 'title' }, 'Coding Usage Monitor'),
-    React.createElement('p', { key: 'desc' }, 'Dashboard placeholder'),
-  ]);
+  return React.createElement(Dashboard);
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  React.createElement(App)
-);
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("Root element not found");
+}
+
+ReactDOM.createRoot(rootElement).render(React.createElement(App));
