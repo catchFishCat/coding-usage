@@ -106,23 +106,23 @@ The web app reads status from `/status` and `/health` (proxied to `http://127.0.
 
 ## Provider tracking docs
 
-- English index: `docs/providers/README.md`
-- Chinese index: `docs/providers/zh-CN/README.md`
+- English index: [docs/providers/README.md](docs/providers/README.md)
+- Chinese index: [docs/providers/zh-CN/README.md](docs/providers/zh-CN/README.md)
 - Per-provider docs include tracking paths, payload mapping, auth source priority, and fallback behavior.
 - English provider docs:
-  - `docs/providers/codex-tracking-and-auth.md`
-  - `docs/providers/gemini-tracking-and-auth.md`
-  - `docs/providers/kimi-tracking-and-auth.md`
-  - `docs/providers/glm-tracking-and-auth.md`
-  - `docs/providers/openrouter-tracking-and-auth.md`
-  - `docs/providers/github-copilot-tracking-and-auth.md`
+  - [Codex](docs/providers/codex-tracking-and-auth.md)
+  - [Gemini](docs/providers/gemini-tracking-and-auth.md)
+  - [Kimi](docs/providers/kimi-tracking-and-auth.md)
+  - [GLM](docs/providers/glm-tracking-and-auth.md)
+  - [OpenRouter](docs/providers/openrouter-tracking-and-auth.md)
+  - [GitHub Copilot](docs/providers/github-copilot-tracking-and-auth.md)
 - Chinese provider docs:
-  - `docs/providers/zh-CN/codex-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/gemini-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/kimi-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/glm-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/openrouter-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/github-copilot-tracking-and-auth.zh-CN.md`
+  - [Codex（中文）](docs/providers/zh-CN/codex-tracking-and-auth.zh-CN.md)
+  - [Gemini（中文）](docs/providers/zh-CN/gemini-tracking-and-auth.zh-CN.md)
+  - [Kimi（中文）](docs/providers/zh-CN/kimi-tracking-and-auth.zh-CN.md)
+  - [GLM（中文）](docs/providers/zh-CN/glm-tracking-and-auth.zh-CN.md)
+  - [OpenRouter（中文）](docs/providers/zh-CN/openrouter-tracking-and-auth.zh-CN.md)
+  - [GitHub Copilot（中文）](docs/providers/zh-CN/github-copilot-tracking-and-auth.zh-CN.md)
 
 ## License
 

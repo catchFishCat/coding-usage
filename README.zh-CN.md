@@ -106,23 +106,23 @@ pnpm dev
 
 ## 供应商追踪文档
 
-- 英文索引：`docs/providers/README.md`
-- 中文索引：`docs/providers/zh-CN/README.md`
+- 英文索引：[docs/providers/README.md](docs/providers/README.md)
+- 中文索引：[docs/providers/zh-CN/README.md](docs/providers/zh-CN/README.md)
 - 每个供应商文档均包含：追踪接口路径、字段映射方式、鉴权来源优先级、回退链路。
 - 英文供应商文档：
-  - `docs/providers/codex-tracking-and-auth.md`
-  - `docs/providers/gemini-tracking-and-auth.md`
-  - `docs/providers/kimi-tracking-and-auth.md`
-  - `docs/providers/glm-tracking-and-auth.md`
-  - `docs/providers/openrouter-tracking-and-auth.md`
-  - `docs/providers/github-copilot-tracking-and-auth.md`
+  - [Codex](docs/providers/codex-tracking-and-auth.md)
+  - [Gemini](docs/providers/gemini-tracking-and-auth.md)
+  - [Kimi](docs/providers/kimi-tracking-and-auth.md)
+  - [GLM](docs/providers/glm-tracking-and-auth.md)
+  - [OpenRouter](docs/providers/openrouter-tracking-and-auth.md)
+  - [GitHub Copilot](docs/providers/github-copilot-tracking-and-auth.md)
 - 中文供应商文档：
-  - `docs/providers/zh-CN/codex-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/gemini-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/kimi-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/glm-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/openrouter-tracking-and-auth.zh-CN.md`
-  - `docs/providers/zh-CN/github-copilot-tracking-and-auth.zh-CN.md`
+  - [Codex（中文）](docs/providers/zh-CN/codex-tracking-and-auth.zh-CN.md)
+  - [Gemini（中文）](docs/providers/zh-CN/gemini-tracking-and-auth.zh-CN.md)
+  - [Kimi（中文）](docs/providers/zh-CN/kimi-tracking-and-auth.zh-CN.md)
+  - [GLM（中文）](docs/providers/zh-CN/glm-tracking-and-auth.zh-CN.md)
+  - [OpenRouter（中文）](docs/providers/zh-CN/openrouter-tracking-and-auth.zh-CN.md)
+  - [GitHub Copilot（中文）](docs/providers/zh-CN/github-copilot-tracking-and-auth.zh-CN.md)
 
 ## License
 
