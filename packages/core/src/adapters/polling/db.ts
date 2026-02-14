@@ -80,3 +80,38 @@ export function insertQuotaSnapshot(
   `,
   ).run(providerId, ruleId, Date.now(), used, limit, percentage, Date.now());
 }
+
+export function pruneProviderRules(
+  db: any,
+  providerId: string,
+  keepRuleIds: string[],
+): void {
+  const rows = db
+    .prepare(
+      `
+      SELECT id FROM quota_rules
+      WHERE provider_id = ?
+    `,
+    )
+    .all(providerId) as Array<{ id: string }>;
+
+  const keep = new Set(keepRuleIds);
+  const stale = rows.map((row) => row.id).filter((ruleId) => !keep.has(ruleId));
+
+  if (stale.length === 0) {
+    return;
+  }
+
+  const deleteSnapshots = db.prepare(
+    `DELETE FROM quota_snapshots WHERE quota_rule_id = ?`,
+  );
+  const deleteRules = db.prepare(`DELETE FROM quota_rules WHERE id = ?`);
+
+  const tx = db.transaction((ids: string[]) => {
+    for (const id of ids) {
+      deleteSnapshots.run(id);
+      deleteRules.run(id);
+    }
+  });
+  tx(stale);
+}

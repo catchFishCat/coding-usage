@@ -6,6 +6,10 @@
 
 import { Command } from "commander";
 
+import { loadLocalEnv } from "./env.js";
+
+loadLocalEnv();
+
 /**
  * Root command
  */
@@ -63,6 +67,29 @@ program
   .action(async (options) => {
     const { collect } = await import("./commands/collect.js");
     await collect(options);
+  });
+
+/**
+ * Auth commands
+ */
+const auth = program.command("auth").description("Manage provider auth tokens");
+
+auth
+  .command("login <provider>")
+  .description("Run provider login flow and auto-discover local credentials")
+  .option("--env <name>", "unused compatibility option")
+  .option("--url <url>", "unused compatibility option")
+  .action(async (provider, options) => {
+    const { authLogin } = await import("./commands/auth.js");
+    await authLogin(provider, options);
+  });
+
+auth
+  .command("status")
+  .description("Show auth token/key availability from .env.local")
+  .action(async () => {
+    const { authStatus } = await import("./commands/auth.js");
+    await authStatus();
   });
 
 /**

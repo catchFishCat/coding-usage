@@ -8,8 +8,8 @@ export function geminiAuthFeasibility(): {
     oauthCli: true,
     notes: [
       "Official reachability can be checked with GEMINI_API_KEY via /v1beta/models.",
-      "OAuth access is currently practical through the Gemini CLI, which exposes /stats.",
-      "No stable public OAuth quota polling endpoint is documented for direct API use.",
+      "OAuth access is practical via GOOGLE_OAUTH_ACCESS_TOKEN or gcloud application-default credentials.",
+      "Gemini CLI /stats remains a fallback when OAuth/API key probing is unavailable.",
     ],
   };
 }

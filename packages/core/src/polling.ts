@@ -57,21 +57,27 @@ export async function pollProvidersOnce(): Promise<PollResult[]> {
 }
 
 export async function probeAllProviderPaths(): Promise<PollResult[]> {
+  const db = createDatabase();
+  initializeDatabase(db);
   const experimentalTargets = ["codex", "glm", "kimi", "gemini"] as const;
 
-  return Promise.all(
-    experimentalProviderProbes.map(async (probe, index) => {
-      try {
-        return await probe();
-      } catch (error) {
-        return normalizeError(
-          experimentalTargets[index] ?? "unknown",
-          "experimental",
-          error,
-        );
-      }
-    }),
-  );
+  try {
+    return await Promise.all(
+      experimentalProviderProbes.map(async (probe, index) => {
+        try {
+          return await probe(db);
+        } catch (error) {
+          return normalizeError(
+            experimentalTargets[index] ?? "unknown",
+            "experimental",
+            error,
+          );
+        }
+      }),
+    );
+  } finally {
+    closeDatabase(db);
+  }
 }
 
 export type { PollResult } from "./adapters/polling/index.js";

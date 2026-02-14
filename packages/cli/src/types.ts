@@ -33,11 +33,19 @@ export interface InitOptions {
 }
 
 /**
+ * Auth login command options
+ */
+export interface AuthLoginOptions {
+  env?: string;
+  url?: string;
+}
+
+/**
  * Rule command options
  */
 export interface RuleOptions {
   provider?: string;
-  type?: 'sliding' | 'fixed' | 'budget' | 'balance';
+  type?: "sliding" | "fixed" | "budget" | "balance";
   limit?: number;
-  unit?: 'requests' | 'tokens' | 'usd' | 'credits';
+  unit?: "requests" | "tokens" | "usd" | "credits";
 }

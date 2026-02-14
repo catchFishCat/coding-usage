@@ -8,4 +8,4 @@ export interface PollResult {
 }
 
 export type ProviderPoller = (db: unknown) => Promise<PollResult>;
-export type ProviderProbe = () => Promise<PollResult>;
+export type ProviderProbe = (db: unknown) => Promise<PollResult>;

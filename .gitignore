@@ -39,3 +39,6 @@ coverage/
 
 # Claude Code configuration (local only)
 .claude/
+
+# Git worktrees
+.worktrees/
